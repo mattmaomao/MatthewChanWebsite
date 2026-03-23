@@ -37,7 +37,7 @@ export default function Projects() {
         ? projects
         : tag === "featured"
           ? projects.filter((p) => p.featured)
-          : projects.filter((p) => p.tags?.includes(tag)),
+          : projects.filter((p) => p.tags?.map?.((t) => t.toLowerCase())?.includes(tag)),
     );
   };
 
