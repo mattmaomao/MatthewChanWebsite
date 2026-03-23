@@ -1,0 +1,126 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 20px 0;
+  transition: background var(--transition), padding var(--transition), border-color var(--transition);
+  border-bottom: 1px solid transparent;
+}
+
+.navbar.scrolled {
+  background: rgba(9, 11, 16, 0.92);
+  backdrop-filter: blur(12px);
+  padding: 14px 0;
+  border-bottom-color: var(--border);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--text-primary);
+  transition: color var(--transition);
+}
+
+.logo:hover { color: var(--accent); }
+
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.link {
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+  transition: color var(--transition);
+  position: relative;
+  /* reset button styles */
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-mono);
+  cursor: pointer;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform var(--transition);
+}
+
+.link:hover,
+.link.active {
+  color: var(--accent);
+}
+
+.link.active::after,
+.link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Hamburger (mobile) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+@media (max-width: 640px) {
+  .hamburger { display: flex; }
+
+  .nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    background: rgba(9, 11, 16, 0.97);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 24px 20px;
+  }
+
+  .nav.open { display: flex; }
+
+  .link {
+    padding: 12px 0;
+    width: 100%;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+  }
+}

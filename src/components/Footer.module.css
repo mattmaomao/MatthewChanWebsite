@@ -1,0 +1,19 @@
+.footer {
+  margin-top: 80px;
+  border-top: 1px solid var(--border);
+  padding: 28px 0;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.text {
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
