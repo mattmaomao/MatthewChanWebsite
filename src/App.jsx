@@ -4,7 +4,7 @@ import Footer from './components/Footer.jsx'
 import Home from './pages/Home.jsx'
 import Projects from './pages/Projects.jsx'
 import ProjectDetail from './pages/ProjectDetail.jsx'
-import Admin from './pages/Admin.jsx'
+// import Admin from './pages/Admin.jsx'
 
 export default function App() {
   return (
@@ -15,7 +15,7 @@ export default function App() {
           <Route path="/"            element={<Home />} />
           <Route path="/projects"    element={<Projects />} />
           <Route path="/projects/:slug" element={<ProjectDetail />} />
-          <Route path="/admin"       element={<Admin />} />
+          {/* <Route path="/admin"       element={<Admin />} /> */}
         </Routes>
       </main>
       <Footer />
