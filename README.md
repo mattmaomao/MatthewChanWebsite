@@ -11,8 +11,6 @@ portfolio/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml          # CI/CD: auto-deploy to GitHub Pages on push
-├── public/
-│   └── resume.pdf              # ← drop your resume here
 ├── src/
 │   ├── components/
 │   │   ├── Navbar.jsx / .module.css
@@ -24,13 +22,11 @@ portfolio/
 │   │   ├── ProjectDetail.jsx / .module.css
 │   │   └── Contact.jsx / .module.css
 │   ├── lib/
-│   │   ├── supabase.js         # Supabase client + data helpers
-│   │   └── mockData.js         # Fallback data for local dev
+│   │   └── firebase.js         # firebase client + data helpers
 │   ├── App.jsx                 # Routes
 │   ├── main.jsx                # Entry point
 │   └── index.css               # Global styles & design tokens
-├── supabase-schema.sql         # DB schema — run in Supabase SQL Editor
-├── .env.example                # Env variable template
+├── .env.local                  # Env variable (not pushed to git)
 ├── vite.config.js
 └── package.json
 ```

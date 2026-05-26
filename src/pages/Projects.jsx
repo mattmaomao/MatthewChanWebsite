@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getProjects } from '../lib/supabase.js'
+import { getProjects } from '../lib/firebase.js'
 import ProjectCard from '../components/ProjectCard.jsx'
 import styles from './Projects.module.css'
 
