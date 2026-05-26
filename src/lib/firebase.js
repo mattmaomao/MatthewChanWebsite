@@ -45,7 +45,7 @@ export const storage = getStorage(app)
 // onProgress(0-100) is called during upload.
 export function uploadThumbnail(slug, file, onProgress) {
   return new Promise((resolve, reject) => {
-    const path = `thumbnails/${slug}/${file.name}`
+    const path = `thumbnails/${slug}`
     const ref  = storageRef(storage, path)
     const task = uploadBytesResumable(ref, file)
 
