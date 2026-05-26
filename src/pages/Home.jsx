@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getProjects } from "../lib/supabase.js";
+import { getProjects } from "../lib/firebase.js";
 import ProjectCard from "../components/ProjectCard.jsx";
 import styles from "./Home.module.css";
 
@@ -9,11 +9,11 @@ const INFO = {
   role: "Game Developer & CS Graduate",
   tagline: "I build games, tools, and bring ideas to reality.",
   quote:
-    "Games are not just entertainment — they're stories to tell, lifes to experience, dreams to fantasize.",
+    "Games are not just entertainment — they're stories to tell, lives to experience, dreams to fantasize.",
   github: "https://github.com/mattmaomao",
   linkedin: "https://www.linkedin.com/in/mattmao/",
   email: "matthewcp220@gmail.com",
-  location: "Burnaby, BC",
+  location: "Vancouver, BC",
   about: [
     "I recently graduated with a degree in Computer Science, with a focus on game development and interactive systems.",
     "I love building things — from procedurally generated game worlds to full-stack web apps. I thrive on learning new technologies and applying them to solve problems or create something unique.",
@@ -46,14 +46,17 @@ const INFO = {
 
 export default function Home() {
   const [featured, setFeatured] = useState([]);
+  const [gamejams, setGamejams] = useState([]);
 
   useEffect(() => {
     const load = async () => {
       try {
         const all = await getProjects();
         setFeatured(all.filter((p) => p.featured).slice(0, 3));
+        setGamejams(all.filter((p) => p.gamejam).slice(0, 3));
       } catch {
         setFeatured([]);
+        setGamejams([]);
       }
     };
     load();
@@ -91,36 +94,33 @@ export default function Home() {
                 <p key={i}>{para}</p>
               ))}
             </div>
-            {/* Skills live beside about text */}
-            <div>
-              <div className={styles.skillsGrid}>
-                <div>
-                  <p className={styles.skillGroupTitle}>Technical Skills</p>
-                  <div className={styles.skills}>
-                    {INFO.technicalSkills.map((s, i) => (
-                      <span
-                        key={s}
-                        className={styles.skill}
-                        style={{ animationDelay: `${i * 50}ms` }}
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
+            <div className={styles.skillsGrid}>
+              <div>
+                <p className={styles.skillGroupTitle}>Technical Skills</p>
+                <div className={styles.skills}>
+                  {INFO.technicalSkills.map((s, i) => (
+                    <span
+                      key={s}
+                      className={styles.skill}
+                      style={{ animationDelay: `${i * 50}ms` }}
+                    >
+                      {s}
+                    </span>
+                  ))}
                 </div>
-                <div>
-                  <p className={styles.skillGroupTitle}>Hobbies</p>
-                  <div className={styles.skills}>
-                    {INFO.hobbies.map((s, i) => (
-                      <span
-                        key={s}
-                        className={styles.skill}
-                        style={{ animationDelay: `${i * 50}ms` }}
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
+              </div>
+              <div>
+                <p className={styles.skillGroupTitle}>Hobbies</p>
+                <div className={styles.skills}>
+                  {INFO.hobbies.map((s, i) => (
+                    <span
+                      key={s}
+                      className={styles.skill}
+                      style={{ animationDelay: `${i * 50}ms` }}
+                    >
+                      {s}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -134,12 +134,42 @@ export default function Home() {
           <div className="container">
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>Featured Projects</h2>
-              <Link to="/projects" className={styles.seeAll}>
+              <Link
+                to="/projects"
+                className={styles.seeAll}
+                onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
+              >
                 See All →
               </Link>
             </div>
             <div className={styles.grid}>
               {featured.map((p) => (
+                <ProjectCard key={p.id} project={p} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Game Jam ── */}
+      {gamejams.length > 0 && (
+        <section className={styles.featuredSection}>
+          <div className="container">
+            <div className={styles.sectionHeader}>
+              <div className={styles.sectionTitleRow}>
+                <h2 className={styles.sectionTitle}>Game Jam Entries</h2>
+                <span className={styles.jamBadge}>48h</span>
+              </div>
+              <Link
+                to="/projects"
+                className={styles.seeAll}
+                onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
+              >
+                See All →
+              </Link>
+            </div>
+            <div className={styles.grid}>
+              {gamejams.map((p) => (
                 <ProjectCard key={p.id} project={p} />
               ))}
             </div>
