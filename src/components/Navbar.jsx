@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { NavLink, Link, useLocation, useNavigate } from 'react-router-dom'
 import styles from './Navbar.module.css'
 
-const RESUME_URL = 'https://vcfcjoklssbqgqriyfnd.supabase.co/storage/v1/object/public/MatthewWebsite-project%20images/resume.pdf'
+const RESUME_URL = 'https://firebasestorage.googleapis.com/v0/b/matthewcpportfolio.firebasestorage.app/o/CHAN%20Chun%20Pui%20Matthew_Resume.pdf?alt=media&token=952ef5d5-fe6e-4062-87bd-ab46757f26f1'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
