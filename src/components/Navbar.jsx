@@ -1,72 +1,90 @@
-import { useState, useEffect } from 'react'
-import { NavLink, Link, useLocation, useNavigate } from 'react-router-dom'
-import styles from './Navbar.module.css'
-
-const RESUME_URL = 'https://firebasestorage.googleapis.com/v0/b/matthewcpportfolio.firebasestorage.app/o/CHAN%20Chun%20Pui%20Matthew_Resume.pdf?alt=media&token=952ef5d5-fe6e-4062-87bd-ab46757f26f1'
+import { useState, useEffect } from "react";
+import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
+import { getDynamicURL } from "../lib/firebase";
+import styles from "./Navbar.module.css";
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
-  const location = useLocation()
-  const navigate = useNavigate()
+  const [resumeURL, setResumeURL] = useState("#");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+    getDynamicURL("Resume File")
+      .then((url) => setResumeURL(url))
+      .catch(() => {});
+  }, []);
+
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Smooth-scroll to a section on the home page.
   // If not on home, navigate there first then scroll.
   const scrollToSection = (sectionId) => {
-    setMenuOpen(false)
-    if (location.pathname === '/') {
-      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
+    setMenuOpen(false);
+    if (location.pathname === "/") {
+      document
+        .getElementById(sectionId)
+        ?.scrollIntoView({ behavior: "smooth" });
     } else {
-      navigate('/')
+      navigate("/");
       setTimeout(() => {
-        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
-      }, 100)
+        document
+          .getElementById(sectionId)
+          ?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
     }
-  }
+  };
 
   const goToPage = (path) => {
-    setMenuOpen(false)
-    window.scrollTo({ top: 0, behavior: 'instant' })
-    navigate(path)
-  }
+    setMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: "instant" });
+    navigate(path);
+  };
 
   return (
-    <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
+    <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
       <div className={`container ${styles.inner}`}>
         <Link to="/" className={styles.logo} onClick={() => setMenuOpen(false)}>
           Matthew Chan
         </Link>
 
-        <nav className={`${styles.nav} ${menuOpen ? styles.open : ''}`}>
+        <nav className={`${styles.nav} ${menuOpen ? styles.open : ""}`}>
           <NavLink
             to="/"
             end
-            className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
-            onClick={() => goToPage('/')}
+            className={({ isActive }) =>
+              `${styles.link} ${isActive ? styles.active : ""}`
+            }
+            onClick={() => goToPage("/")}
           >
             Home
           </NavLink>
 
-          <button className={styles.link} onClick={() => scrollToSection('about')}>
+          <button
+            className={styles.link}
+            onClick={() => scrollToSection("about")}
+          >
             About Me
           </button>
 
           <NavLink
             to="/projects"
-            className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
-            onClick={() => goToPage('/projects')}
+            className={({ isActive }) =>
+              `${styles.link} ${isActive ? styles.active : ""}`
+            }
+            onClick={() => goToPage("/projects")}
           >
             Projects
           </NavLink>
 
           <a
-            href={RESUME_URL}
+            href={resumeURL}
             className={styles.link}
             target="_blank"
             rel="noreferrer"
@@ -75,19 +93,24 @@ export default function Navbar() {
             Resume
           </a>
 
-          <button className={styles.link} onClick={() => scrollToSection('contact')}>
+          <button
+            className={styles.link}
+            onClick={() => scrollToSection("contact")}
+          >
             Contact
           </button>
         </nav>
 
         <button
           className={styles.hamburger}
-          onClick={() => setMenuOpen(o => !o)}
+          onClick={() => setMenuOpen((o) => !o)}
           aria-label="Toggle menu"
         >
-          <span /><span /><span />
+          <span />
+          <span />
+          <span />
         </button>
       </div>
     </header>
-  )
+  );
 }
